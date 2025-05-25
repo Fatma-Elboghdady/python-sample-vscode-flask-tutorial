@@ -2,29 +2,22 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "fatma21/python_pipeline"
+        XYZ = 'ITI ITI ITI'
     }
 
     stages {
-        stage("Build Docker image") {
+        stage("build Docker image") {
             steps {
-                sh "docker build -t ${IMAGE_NAME}:v${BUILD_NUMBER} ."
+                sh "docker build -t fatma21/python_piplin:v${BUILD_NUMBER} ."
             }
         }
-
-        stage("Login to DockerHub") {
+        stage("Push Docker image") {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin"
+                    sh "docker push fatma21/python_piplin:v${BUILD_NUMBER}"
                 }
-            }
-        }
-
-        stage("Push Docker image") {
-            steps {
-                sh "docker push ${IMAGE_NAME}:v${BUILD_NUMBER}"
             }
         }
     }
 }
-
