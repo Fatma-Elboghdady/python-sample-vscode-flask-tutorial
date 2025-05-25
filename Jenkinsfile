@@ -6,12 +6,12 @@ pipeline{
     stages{
         stage("build Docker image"){
             steps{
-                sh "docker build -t itiv4/data-iti:v${BUILD_NUMBER} ."
+                sh "docker build -t fatma21/python_piplin:v${BUILD_NUMBER} ."
             }
         }
         stage("Push Docker image"){
             steps{
-                sh "docker push itiv4/data-iti:v${BUILD_NUMBER}"
+                sh "docker push fatma21/python_piplin:v${BUILD_NUMBER}"
             }
         }
     }
